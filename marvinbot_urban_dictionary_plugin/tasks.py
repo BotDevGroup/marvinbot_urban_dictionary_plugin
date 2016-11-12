@@ -63,6 +63,7 @@ def on_ud_command(update, *args, **kwargs):
             if len(tags_list) > 0:
                 tags = map(lambda tag: "#{}".format(tag), set(tags_list))
                 response += "\n{}".format(" ".join(tags))
+        response += "\n[Permalink ↗️]({permalink})"
         responses.append(response.format(**d))
 
     adapter.bot.sendMessage(
