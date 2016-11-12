@@ -29,14 +29,19 @@ def on_ud_command(update, *args, **kwargs):
     log.info('Urban Dictionary command caught')
     message = get_message(update)
     terms = " ".join(kwargs.get('terms'))
+
+    if len(terms) == 0:
+        adapter.bot.sendMessage(chat_id=message.chat_id, text="❌ Term or phrase is too short.")
+        return
+
     verbose = kwargs.get('verbose')
     no_examples = kwargs.get('no_examples')
     n = int(kwargs.get('n'))
-    n = n if n > 0 and n <= 10 else 1
-    log.info(kwargs)
+    n = n if n > 0 and n <= 5 else 1
 
     data = fetch_definitions(terms)
-    log.info(json.dumps(data, indent=4, sort_keys=True))
+    # adapter.bot.sendMessage(chat_id=message.chat_id,
+    #                         text=json.dumps(data, indent=4, sort_keys=True))
 
     def_list = data.get("list")
     tags_list = data.get("tags")
