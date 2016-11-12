@@ -66,10 +66,20 @@ def on_ud_command(update, *args, **kwargs):
         response += "\n[Permalink ↗️]({permalink})"
         responses.append(response.format(**d))
 
-    adapter.bot.sendMessage(
-        chat_id=message.chat_id,
-        text="\n\n".join(responses),
-        parse_mode="Markdown")
+    if len(responses) == 0:
+        adapter.bot.sendMessage(chat_id=message.chat_id,
+                                text="❌ No results")
+        return
+    if len(responses) <= 3:
+        adapter.bot.sendMessage(chat_id=message.chat_id,
+                                text="\n\n".join(responses),
+                                parse_mode="Markdown")
+    else:
+        for response in responses:
+            adapter.bot.sendMessage(chat_id=message.chat_id,
+                                    text=response,
+                                    parse_mode="Markdown",
+                                    disable_web_page_preview=True)
 
 
 def setup(new_adapter):
