@@ -73,7 +73,8 @@ def on_ud_command(update, *args, **kwargs):
     if len(responses) <= 3:
         adapter.bot.sendMessage(chat_id=message.chat_id,
                                 text="\n\n".join(responses),
-                                parse_mode="Markdown")
+                                parse_mode="Markdown",
+                                disable_web_page_preview=True)
     else:
         for response in responses:
             adapter.bot.sendMessage(chat_id=message.chat_id,
